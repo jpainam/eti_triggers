@@ -7,11 +7,11 @@ import { getLastTrial } from "./actions/trials";
 //import { getRecordings } from '@/app/actions/recordings';
 
 export default async function App() {
-  /*try{
-  await fetch("http://localhost:3000/api/create-tables");
-  }catch(error){
-    console.log(error)
-  }*/
+  try {
+    await fetch("http://localhost:3000/api/create-tables");
+  } catch (error) {
+    console.log(error);
+  }
 
   //const recordings = await getRecordings()
 

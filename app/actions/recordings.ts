@@ -1,24 +1,16 @@
+'use server';
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
-
-export async function createRecordings(prevState: any, formData: FormData) {
-  const schema = z.object({
-    participant: z.string().min(1),
-    session: z.string().min(1),
-    startTime: z.string().min(1),
-    recordingStartTime: z.string().min(1),
-    recordingEndTime: z.string().min(1),
-  });
-
-  const data = schema.parse({
-    participant: formData.get("participant"),
-    session: formData.get("session"),
-    startTime: formData.get("startTime"),
-    recordingStartTime: formData.get("recordingStartTime"),
-    recordingEndTime: formData.get("recordingEndTime"),
-  });
+export type CreateRecordingData = {
+  participant: string;
+  session: string;
+  startTime: string;
+  recordingStartTime: string;
+  recordingEndTime: string;
+};
+export async function createRecordings(data: CreateRecordingData) {
   try {
     await sql`
             INSERT INTO recordings(participant, session, startTime, recordingStartTime, recordingEndTime) 

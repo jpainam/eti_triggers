@@ -7,20 +7,20 @@ export async function GET(request: Request) {
       CREATE TABLE IF NOT EXISTS recordings (
         id SERIAL PRIMARY KEY,
         participant VARCHAR(255) NOT NULL,
-        session VARCHAR(255) UNIQUE NOT NULL,
-        startTime TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-        recordingStartTime TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-        recordingEndTime TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+        session VARCHAR(255) NOT NULL,
+        startTime VARCHAR(255) NOT NULL,
+        recordingStartTime VARCHAR(255) NOT NULL,
+        recordingEndTime VARCHAR(255) NOT NULL
       );
       `;
-    await sql`CREATE TABLE IF NOT EXISTS sessions (
+    /*await sql`CREATE TABLE IF NOT EXISTS sessions (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         status VARCHAR(255) NOT NULL DEFAULT 'stopped',
         "startTime" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         "endTime" TIMESTAMP WITH TIME ZONE DEFAULT NULL
       );
-      `;
+      `;*/
 
     return NextResponse.json(
       { message: `Successfully created ${migrateResult} tables` },

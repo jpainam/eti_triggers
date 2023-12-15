@@ -1,9 +1,11 @@
 "use client";
-import { set, z } from "zod";
-import RunningButton from "./running-button";
-import { Button, Form } from "react-bootstrap";
+import {
+  CreateRecordingData,
+  createRecordings,
+} from "@/app/actions/recordings";
 import { useState } from "react";
-import { Trial } from "@/app/types/trial";
+import { Button, Form } from "react-bootstrap";
+import RunningButton from "./running-button";
 
 export default function ProcedureButton({
   participant,
@@ -14,10 +16,13 @@ export default function ProcedureButton({
   session: string;
   sessionStartTime: string;
 }) {
-  const [currentTrial, setCurrentTrial] = useState({});
-  const [startProcedureTime, setStartProcedureTime] = useState(
-    new Date().toLocaleTimeString()
-  );
+  const [currentTrial, setCurrentTrial] = useState<CreateRecordingData>({
+    participant: "",
+    session: "",
+    startTime: "",
+    recordingStartTime: "",
+    recordingEndTime: "",
+  });
 
   const [statusTrial, setStatusTrial] = useState(false);
   const [startTrialTime, setStartTrialTime] = useState("Not started");
@@ -29,22 +34,30 @@ export default function ProcedureButton({
 
     const t = new Date().toLocaleTimeString();
     setCurrentTrial({
-      Participant: participant,
-      Session: session,
-      StartTime: sessionStartTime,
-      RecordingStartTime: t,
+      participant: participant,
+      session: session,
+      startTime: sessionStartTime,
+      recordingStartTime: t,
+      recordingEndTime: "",
     });
     setStatusTrial(true);
     setStartTrialTime(t);
   };
-  const endTrialFn = (e: any) => {
+  const endTrialFn = async (e: any) => {
     if (!statusTrial) {
       return;
     }
     const t2 = new Date().toLocaleTimeString();
-    setCurrentTrial({ ...currentTrial, RecordingEndTime: t2 });
+    setCurrentTrial({ ...currentTrial, recordingEndTime: t2 });
     setStatusTrial(false);
     setStartTrialTime("Not started");
+    await createRecordings({
+      participant: participant,
+      session: session,
+      startTime: currentTrial.startTime,
+      recordingStartTime: currentTrial.recordingStartTime,
+      recordingEndTime: currentTrial.recordingStartTime,
+    });
   };
   return (
     <div className="card">
@@ -59,11 +72,14 @@ export default function ProcedureButton({
               {statusTrial ? (
                 <RunningButton variant="success" label="Running..." />
               ) : (
-                <Form action={startTrialFn}>
-                  <Button type="submit" variant="success" size="lg">
-                    Start
-                  </Button>
-                </Form>
+                <Button
+                  onClick={startTrialFn}
+                  type="submit"
+                  variant="success"
+                  size="lg"
+                >
+                  Start
+                </Button>
               )}
             </div>
             <div className="col-sm-7">
