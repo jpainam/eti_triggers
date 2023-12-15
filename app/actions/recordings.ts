@@ -1,15 +1,30 @@
-'use server';
+"use server";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 export type CreateRecordingData = {
+  id?: number;
   participant: string;
   session: string;
   startTime: string;
   recordingStartTime: string;
   recordingEndTime: string;
 };
+
+export async function getRecordings() {
+  try {
+    const result = await sql`
+        SELECT * FROM recordings
+        `;
+    const { rows } = result;
+    return rows as CreateRecordingData[];
+  } catch (error) {
+    console.log(error);
+    throw Error("Failed to list recordings");
+  }
+}
+
 export async function createRecordings(data: CreateRecordingData) {
   try {
     await sql`
@@ -28,17 +43,10 @@ export async function createRecordings(data: CreateRecordingData) {
   }
 }
 
-export async function deleteRecording(prevState: any, formData: FormData) {
-  const schema = z.object({
-    id: z.string().min(1),
-  });
-
-  const data = schema.parse({
-    id: formData.get("id"),
-  });
+export async function deleteRecording(id: number) {
   try {
     await sql`
-                DELETE FROM recordings WHERE id = ${data.id}
+                DELETE FROM recordings WHERE id = ${id}
                 `;
     revalidatePath("/");
     return { message: "Recording deleted successfully" };

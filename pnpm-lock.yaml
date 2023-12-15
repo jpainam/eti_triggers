@@ -50,6 +50,9 @@ dependencies:
   react-bootstrap:
     specifier: ^2.9.1
     version: 2.9.1(@types/react@18.2.25)(react-dom@18.2.0)(react@18.2.0)
+  react-bootstrap-icons:
+    specifier: ^1.10.3
+    version: 1.10.3(react@18.2.0)
   react-csv:
     specifier: ^2.2.2
     version: 2.2.2
@@ -3398,6 +3401,15 @@ packages:
       http-errors: 1.7.3
       iconv-lite: 0.4.24
       unpipe: 1.0.0
+    dev: false
+
+  /react-bootstrap-icons@1.10.3(react@18.2.0):
+    resolution: {integrity: sha512-j4hSby6gT9/enhl3ybB1tfr1slZNAYXDVntcRrmVjxB3//2WwqrzpESVqKhyayYVaWpEtnwf9wgUQ03cuziwrw==}
+    peerDependencies:
+      react: '>=16.8.6'
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
     dev: false
 
   /react-bootstrap@2.9.1(@types/react@18.2.25)(react-dom@18.2.0)(react@18.2.0):

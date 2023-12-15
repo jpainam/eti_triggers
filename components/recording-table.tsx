@@ -1,20 +1,22 @@
 import Table from "react-bootstrap/Table";
 import DeleteForm from "./delete-form";
 import DownloadLink from "./download-link";
+import { CreateRecordingData } from "@/app/actions/recordings";
 
-export default async function RecordingsTable() {
-  const response = await fetch("http://localhost:3000/api/recording");
-  const data = await response.json();
+export default async function RecordingsTable(props: {
+  recordings: CreateRecordingData[];
+}) {
+  const { recordings } = props;
   const headers = [
-    { label: "Participant", key: "Participant" },
-    { label: "Session", key: "Session" },
-    { label: "StartTime", key: "StartTime" },
-    { label: "RecordingStartTime", key: "RecordingStartTime" },
-    { label: "RecordingEndTime", key: "RecordingEndTime" },
+    { label: "Participant", key: "participant" },
+    { label: "Session", key: "session" },
+    { label: "StartTime", key: "startTime" },
+    { label: "RecordingStartTime", key: "recordingstarttime" },
+    { label: "RecordingEndTime", key: "Recordingendtime" },
   ];
   return (
     <>
-      <DownloadLink data={data} headers={headers} />
+      <DownloadLink data={recordings} headers={headers} />
       <div className="card" style={{ marginTop: 10 }}>
         <h5 className="card-header">Recordings</h5>
         <div className="card-body">
@@ -30,22 +32,24 @@ export default async function RecordingsTable() {
               </tr>
             </thead>
             <tbody>
-              {/*data.map((col: any) => {
-                return col["RecordingEndTime"] !== "" ? (
-                  <tr key={col["Id"]}>
-                    <td>{col["Participant"]}</td>
-                    <td>{col["Session"]}</td>
-                    <td>{col["StartTime"]}</td>
-                    <td>{col["RecordingStartTime"]}</td>
-                    <td>{col["RecordingEndTime"]}</td>
-                    <td>
-                      <DeleteForm id={col["id"]} />
-                    </td>
-                  </tr>
-                ) : (
-                  <></>
-                );
-              }) */}
+              {recordings &&
+                recordings.map((data: CreateRecordingData) => {
+                  return data.recordingEndTime !== "" ? (
+                    <tr key={data.id}>
+                      <td>{data.id}</td>
+                      <td>{data.participant}</td>
+                      <td>{data.session}</td>
+                      <td>{data.starttime}</td>
+                      <td>{data.recordingstarttime}</td>
+                      <td>{data.recordingendtime}</td>
+                      <td>
+                        <DeleteForm id={data.id} />
+                      </td>
+                    </tr>
+                  ) : (
+                    <></>
+                  );
+                })}
             </tbody>
           </Table>
         </div>
