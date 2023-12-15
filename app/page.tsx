@@ -4,7 +4,7 @@ import ParticipantForm from "@/components/participant-form";
 import RecordingsTable from "@/components/recording-table";
 import { getLastSession } from "./actions/sessions";
 import { getLastTrial } from "./actions/trials";
-
+//import { getRecordings } from '@/app/actions/recordings';
 
 export default async function App() {
   /*try{
@@ -12,23 +12,20 @@ export default async function App() {
   }catch(error){
     console.log(error)
   }*/
-  
-  const lastSession = await getLastSession();
-  const lastTrial = await getLastTrial();
+
+  //const recordings = await getRecordings()
 
   return (
     <>
       <div className="row">
         <div className="col-sm-4">
-          <Suspense fallback={<div>Loading...</div>}>
-          <ParticipantForm lastTrial={lastTrial} lastSession={lastSession} />
-          </Suspense>
+          <ParticipantForm />
         </div>
         <div className="col-sm-8">
-					<Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div>Loading...</div>}>
             <RecordingsTable />
           </Suspense>
-				</div>
+        </div>
       </div>
     </>
   );

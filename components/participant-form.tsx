@@ -1,24 +1,17 @@
 "use client";
-import { Form } from "react-bootstrap";
-import { InputGroup } from "react-bootstrap";
-import RecordingsTimer from "./recording-timer";
 import { useState } from "react";
-import { Session } from "@/app/types/session";
-import { Trial } from "@/app/types/trial";
+import { Form, InputGroup } from "react-bootstrap";
+import RecordingsTimer from "./recording-timer";
 
-type ParticipantFormProps = {
-  lastSession: Session;
-  lastTrial: Trial;
-};
-export default function ParticipantForm(props: ParticipantFormProps) {
+
+export default function ParticipantForm() {
   const [participant, setParticipant] = useState("LC10");
   const [session, setSession] = useState("Day 1");
-  const { lastSession, lastTrial } = props;
   return (
     <>
       <Form>
         <InputGroup className="mb-3">
-          <InputGroup.Text id="basic-addon1">Participant</InputGroup.Text>
+          <InputGroup.Text style={{width: "110px"}} id="basic-addon1">Participant</InputGroup.Text>
           <Form.Control
             placeholder="Participant (e.g. LC10)"
             aria-label="participant"
@@ -28,7 +21,7 @@ export default function ParticipantForm(props: ParticipantFormProps) {
         </InputGroup>
 
         <InputGroup className="mb-3">
-          <InputGroup.Text id="basic-addon1">Session</InputGroup.Text>
+          <InputGroup.Text style={{width: "110px"}} id="basic-addon1">Session</InputGroup.Text>
           <Form.Control
             placeholder="Session (e.g. LC10 Day 1)"
             aria-label="Session"
@@ -39,10 +32,8 @@ export default function ParticipantForm(props: ParticipantFormProps) {
         </InputGroup>
       </Form>
       <RecordingsTimer
-        lastSession={lastSession}
         participant={participant}
         session={session}
-        lastTrial={lastTrial}
       />
     </>
   );
