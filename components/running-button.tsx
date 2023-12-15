@@ -6,7 +6,7 @@ export default function RunningButton(props: { label: string; variant: string; }
 	const { label, variant } = props;
 	return (
 		<Button size="lg" variant={variant} disabled style={{ cursor: "default" }}>
-			<Spinner animation="border" /> {label}
+			<Spinner animation="border" /> {""}
 		</Button>
 	);
 }
