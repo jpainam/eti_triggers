@@ -1,6 +1,5 @@
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
-import { Prata } from "next/font/google";
 import { z } from "zod";
 
 export async function getRecordings() {

@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import Spinner from 'react-bootstrap/Spinner';
 
-function RunningButton(props) {
+export default function RunningButton(props: { label: string; variant: string; }) {
 	const { label, variant } = props;
 	return (
 		<Button size="lg" variant={variant} disabled style={{ cursor: "default" }}>
@@ -10,5 +10,3 @@ function RunningButton(props) {
 		</Button>
 	);
 }
-
-export default RunningButton;

@@ -5,9 +5,14 @@ import { getRecordings } from "@/app/actions/recordings";
 import { CSVLink } from "react-csv";
 import Download from "react-csv/components/Download";
 import DownloadLink from "./download-link";
+import { getLastSession, startSession } from "@/app/actions/sessions";
 
 export default async function RecordingsTable() {
   const data = await getRecordings();
+  const lastSession = await getLastSession()
+  console.log("lastSession")
+  await startSession("Day 1");
+  console.log(lastSession)
   console.log(data);
   const headers = [
     { label: "Participant", key: "Participant" },

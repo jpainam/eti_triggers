@@ -1,11 +1,12 @@
-'use client'
+"use client";
 
 import { CSVLink } from "react-csv";
 
-export default function DownloadLink(props: { data: any; headers: any; }){
-    const {data, headers} = props;
+export default function DownloadLink(props: { data: any; headers: any }) {
+  const { data, headers } = props;
 
-    {/*<CSVLink
+  {
+    /*<CSVLink
         filename={"eti_recordings.csv"}
         className="btn btn-primary"
         separator={","}
@@ -13,9 +14,10 @@ export default function DownloadLink(props: { data: any; headers: any; }){
         headers={headers}
       >
         Download me
-  </CSVLink> */}
-    return (
-        <CSVLink
+  </CSVLink> */
+  }
+  {
+    /*<CSVLink
             filename={"eti_recordings.csv"}
             className="btn btn-primary"
             separator={","}
@@ -23,6 +25,7 @@ export default function DownloadLink(props: { data: any; headers: any; }){
             headers={headers}
         >
             Export (.csv) the recordings
-        </CSVLink>
-    )   
+    </CSVLink>*/
+  }
+  return <div>Recording</div>;
 }
