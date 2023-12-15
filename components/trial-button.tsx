@@ -2,7 +2,6 @@
 import { z } from "zod";
 import RunningButton from "./running-button";
 import { Button, Form } from "react-bootstrap";
-import { startSession } from "@/app/actions/sessions";
 
 export default function ProcedureButton({
   statusTrial,

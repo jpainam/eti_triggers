@@ -2,20 +2,22 @@ import { Session } from "@/app/types/session";
 import ProcedureButton from "./procedure-button";
 import TrialButton from "./trial-button";
 import { getLastSession } from "@/app/actions/sessions";
+import { Trial } from "@/app/types/trial";
 
 type RecordingsTimerProps = {
   participant: string;
   session: string;
   lastSession: Session;
+  lastTrial: Trial
 };
 
 export default async function RecordingsTimer(props: RecordingsTimerProps) {
-  const { participant, session, lastSession } = props;
+  const { participant, session, lastSession, lastTrial } = props;
 
   const statusProcedure = lastSession && lastSession.status === "running";
   const startProcedureTime =
     session && new Date(Date.parse(lastSession.startTime)).toLocaleTimeString();
-  const statusTrial = true;
+  const statusTrial = lastTrial && lastTrial.status === "running";
 
   return (
     <>
@@ -46,7 +48,7 @@ export default async function RecordingsTimer(props: RecordingsTimerProps) {
           className="card-body"
         >
           <TrialButton
-            statusTrial={false}
+            statusTrial={statusTrial}
             participant={participant}
             session={session}
           />

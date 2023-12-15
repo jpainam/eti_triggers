@@ -1,14 +1,15 @@
 'use server';
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
+import { Session } from "../types/session";
 
-export async function getLastSession() {
+export async function getLastSession(): Promise<Session> {
   const result = await sql`
     SELECT * FROM sessions ORDER BY "startTime" DESC LIMIT 1;
     `;
   const { rows } = result;
   if (rows.length === 0) return { message: "No sessions found" };
-  return rows[0];
+  return rows[0] as Session;
 }
 
 export async function createSession(session: string) {

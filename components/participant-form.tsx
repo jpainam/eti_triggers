@@ -4,14 +4,16 @@ import { InputGroup } from "react-bootstrap";
 import RecordingsTimer from "./recording-timer";
 import { useState } from "react";
 import { Session } from "@/app/types/session";
+import { Trial } from "@/app/types/trial";
 
 type ParticipantFormProps = {
   lastSession: Session;
+  lastTrial: Trial;
 };
 export default function ParticipantForm(props: ParticipantFormProps) {
   const [participant, setParticipant] = useState("LC10");
   const [session, setSession] = useState("Day 1");
-  const { lastSession } = props;
+  const { lastSession, lastTrial } = props;
   return (
     <>
       <Form>
@@ -40,6 +42,7 @@ export default function ParticipantForm(props: ParticipantFormProps) {
         lastSession={lastSession}
         participant={participant}
         session={session}
+        lastTrial={lastTrial}
       />
     </>
   );
