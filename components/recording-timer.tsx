@@ -1,8 +1,4 @@
-import { Button } from "react-bootstrap";
-import RunningButton from "./running-button";
-import Clock from "./clock";
 import ProcedureButton from "./procedure-button";
-import { getLastSession } from "@/app/actions/sessions";
 import TrialButton from "./trial-button";
 
 type RecordingsTimerProps = {
@@ -13,11 +9,15 @@ type RecordingsTimerProps = {
 export default async function RecordingsTimer(props: RecordingsTimerProps) {
   const { participant, session } = props;
 
-  const startProcedureTime = new Date().toLocaleTimeString();
-  const lastSession = await fetch("http://localhost:3000/api/get-last-session");
-  console.log(lastSession);
+  const response = await fetch("http://localhost:3000/api/get-last-session", {
+    next: { tags: ["sessions"] },
+  });
+  const lastSession = await response.json();
 
   const statusProcedure = lastSession && lastSession.status === "running";
+  const startProcedureTime =
+    lastSession &&
+    new Date(Date.parse(lastSession.startTime)).toLocaleTimeString();
   const statusTrial = true;
 
   return (
@@ -34,11 +34,12 @@ export default async function RecordingsTimer(props: RecordingsTimerProps) {
             statusProcedure={statusProcedure}
             participant={participant}
             session={session}
+            sessionId={lastSession && lastSession.id}
           />
         </div>
-        <div className="card-footer">
-          Elapsed time: <strong></strong>
-        </div>
+        {/*<div className="card-footer">
+        Elapsed time: <strong></strong>
+        </div>*/}
       </div>
 
       <div className="card">

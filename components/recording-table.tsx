@@ -1,19 +1,10 @@
-import React from "react";
 import Table from "react-bootstrap/Table";
 import DeleteForm from "./delete-form";
-import { getRecordings } from "@/app/actions/recordings";
-import { CSVLink } from "react-csv";
-import Download from "react-csv/components/Download";
 import DownloadLink from "./download-link";
-import { getLastSession, startSession } from "@/app/actions/sessions";
 
 export default async function RecordingsTable() {
-  const data = await getRecordings();
-  const lastSession = await getLastSession()
-  console.log("lastSession")
-  await startSession("Day 1");
-  console.log(lastSession)
-  console.log(data);
+  const response = await fetch("http://localhost:3000/api/recording");
+  const data = await response.json();
   const headers = [
     { label: "Participant", key: "Participant" },
     { label: "Session", key: "Session" },
@@ -24,7 +15,7 @@ export default async function RecordingsTable() {
   return (
     <>
       <DownloadLink data={data} headers={headers} />
-      <div className="card" style={{marginTop: 10}}>
+      <div className="card" style={{ marginTop: 10 }}>
         <h5 className="card-header">Recordings</h5>
         <div className="card-body">
           <Table striped bordered hover>
@@ -39,7 +30,7 @@ export default async function RecordingsTable() {
               </tr>
             </thead>
             <tbody>
-              {data.map((col: any) => {
+              {/*data.map((col: any) => {
                 return col["RecordingEndTime"] !== "" ? (
                   <tr key={col["Id"]}>
                     <td>{col["Participant"]}</td>
@@ -54,12 +45,12 @@ export default async function RecordingsTable() {
                 ) : (
                   <></>
                 );
-              })}
+              }) */}
             </tbody>
           </Table>
         </div>
         <div className="card-footer">
-          Current time: <strong>{new Date().toLocaleTimeString()}</strong>
+          {/*Current time: <strong>{new Date().toLocaleTimeString()}</strong>*/}
         </div>
       </div>
     </>

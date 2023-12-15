@@ -2,16 +2,6 @@ import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
-export async function getRecordings() {
-  try {
-    const recordings = await sql`SELECT * FROM recordings`;
-    const  { rows, fields} =  recordings ;
-    return rows;
-  } catch (error) {
-    console.log(error);
-    return [];
-  }
-}
 
 export async function createRecordings(prevState: any, formData: FormData) {
   const schema = z.object({

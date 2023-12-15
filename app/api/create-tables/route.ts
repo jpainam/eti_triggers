@@ -16,6 +16,7 @@ export async function GET(request: Request) {
     await sql`CREATE TABLE IF NOT EXISTS sessions (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
+        status VARCHAR(255) NOT NULL DEFAULT 'stopped',
         "startTime" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         "endTime" TIMESTAMP WITH TIME ZONE DEFAULT NULL
       );

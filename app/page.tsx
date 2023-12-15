@@ -5,11 +5,11 @@ import RecordingsTable from "@/components/recording-table";
 
 
 export default async function App() {
-  try{
+  /*try{
   await fetch("http://localhost:3000/api/create-tables");
   }catch(error){
     console.log(error)
-  }
+  }*/
   return (
     <>
       <div className="row">
