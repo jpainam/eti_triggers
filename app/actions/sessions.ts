@@ -1,3 +1,4 @@
+'use server';
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 
@@ -12,6 +13,8 @@ export async function getLastSession() {
 
 export async function createSession(session: string) {
   try {
+    console.log("session", session);
+    console.log("Starting creating sessions")
     const result = await sql`
     INSERT INTO sessions(name, "startTime", "endTime", status) 
     VALUES (${session}, NOW(), NULL, 'running') RETURNING *;
@@ -20,6 +23,7 @@ export async function createSession(session: string) {
     revalidatePath("/");
     return { message: `Session successfully created ` };
   } catch (error) {
+    console.error(error); 
     return { message: `Failed to create a session` };
   }
 }

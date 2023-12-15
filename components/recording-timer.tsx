@@ -1,23 +1,20 @@
+import { Session } from "@/app/types/session";
 import ProcedureButton from "./procedure-button";
 import TrialButton from "./trial-button";
+import { getLastSession } from "@/app/actions/sessions";
 
 type RecordingsTimerProps = {
   participant: string;
   session: string;
+  lastSession: Session;
 };
 
 export default async function RecordingsTimer(props: RecordingsTimerProps) {
-  const { participant, session } = props;
-
-  const response = await fetch("http://localhost:3000/api/get-last-session", {
-    next: { tags: ["sessions"] },
-  });
-  const lastSession = await response.json();
+  const { participant, session, lastSession } = props;
 
   const statusProcedure = lastSession && lastSession.status === "running";
   const startProcedureTime =
-    lastSession &&
-    new Date(Date.parse(lastSession.startTime)).toLocaleTimeString();
+    session && new Date(Date.parse(lastSession.startTime)).toLocaleTimeString();
   const statusTrial = true;
 
   return (
